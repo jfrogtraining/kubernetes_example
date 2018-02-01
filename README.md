@@ -83,7 +83,7 @@ Cache docker images of jenkins master and agent in Artifactory by changing value
 ## Step 4. Create Helm chart of product Docker image
 * Create helm chart of `docker-app`
 * Push helm chart in local helm repository in Artifactory
-* [chart](/chart)
+* [chart](/docker-app-chart)
 
 ## Step 5. Deploy `docker-app` in Kubernetes cluster using helm chart
 * Pull helm chart from Virtual helm repository of Artifactory

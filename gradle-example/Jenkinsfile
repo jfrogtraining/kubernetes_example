@@ -4,7 +4,7 @@ node {
 
     //Clone example code from GitHub repository
     stage 'Build'
-        git url: 'https://github.com/jfrogtraining/project-examples.git', branch: 'k8s'
+        git url: 'https://github.com/jfrogtraining/kubernetes_example.git', branch: 'master'
 
     //Configure Artifactroy repository to pull/push artifacts
     stage 'Artifactory configuration'
@@ -20,7 +20,7 @@ node {
         if(CLEAN_REPO == "YES") {
             sh 'rm -rf ~/.gradle/caches'
         }
-        rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
+        rtGradle.run rootDir: "gradle-example/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
 
     //Publish artifacts to Artifactory along with build information and scan build artifacts in Xray
     stage 'Publish Build Information & Scan Artifacts'

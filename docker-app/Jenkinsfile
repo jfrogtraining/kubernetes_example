@@ -2,7 +2,7 @@
 
 node {
     //Clone example project from GitHub repository
-    git url: 'https://github.com/jfrogtraining/swampup', branch: 'k8s'
+    git url: 'https://github.com/jfrogtraining/kubernetes_example.git', branch: 'master'
     def rtServer = Artifactory.server SERVER_ID
     def rtDocker = Artifactory.docker server: rtServer
     def buildInfo = Artifactory.newBuildInfo()
@@ -12,7 +12,7 @@ node {
 
     //Fetch all depedencies from Artifactory
     stage ('Dependencies') {
-        dir ('automation/docker-app') {
+        dir ('docker-app') {
             try {
                 println "Gather Released Docker Framework and Gradle War file"
                 def gradleWarDownload = """{
@@ -34,7 +34,7 @@ node {
     }
     //Build docker image named docker-app
     stage ('Build & Deploy') {
-        dir ('automation/docker-app') {
+        dir ('docker-app') {
 
             tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
             println "Docker App Build"
@@ -47,7 +47,7 @@ node {
      }
     //Test docker image
      stage ('Test') {
-        dir('automation/docker-app/app-test') {
+        dir('docker-app/app-test') {
             tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
             if (testApp(tagDockerApp)) {
                   println "Setting property and promotion"
@@ -77,7 +77,7 @@ node {
 
     //Promote docker image from staging local repo to production repo in Artifactory
      stage ('Promote') {
-        dir('automation/docker-app/app-test') {
+        dir('docker-app/app-test') {
             def promotionConfig = [
               'buildName'          : env.JOB_NAME,
               'buildNumber'        : env.BUILD_NUMBER,
@@ -93,7 +93,7 @@ node {
             reTagLatest (PROMOTE_REPO)
         }
 
-        // promote war file from gradle-release to gradle-prod
+        // promote war file from gradle-dev-local to gradle-release-local
 
      }
 }
@@ -115,23 +115,23 @@ def testApp (tag) {
 
 //Tag docker image
 def reTagLatest (targetRepo) {
-     def BUILD_NUMBER = env.BUILD_NUMBER
-     sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
+    def BUILD_NUMBER = env.BUILD_NUMBER
+    sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
      switch (targetRepo) {
           case PROMOTE_REPO :
               sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
               break
           case SOURCE_REPO :
-              sh 'sed -E "s/TARGETREPO/${SOURCE_REPO}/" retag_out.json > retaga_out.json'
-              break
+               sh 'sed -E "s/TARGETREPO/${SOURCE_REPO}/" retag_out.json > retaga_out.json'
+               break
       }
-      sh 'cat retaga_out.json'
-      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
-          def regTagStr = curlString +  "/api/docker/${SOURCE_REPO}/v2/promote -X POST -H 'Content-Type: application/json' -T retaga_out.json"
-          println "Curl String is " + regTagStr
-          sh regTagStr
-      }
+    sh 'cat retaga_out.json'
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
+        def regTagStr = curlString +  "/api/docker/$targetRepo/v2/promote -X POST -H 'Content-Type: application/json' -T retaga_out.json"
+        println "Curl String is " + regTagStr
+        sh regTagStr
+    }
 }
 
 def updateProperty (property) {

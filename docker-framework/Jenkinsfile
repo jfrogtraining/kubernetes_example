@@ -2,7 +2,7 @@
 
 node {
     //Clone example project from GitHub repository
-    git url: 'https://github.com/jfrogtraining/swampup', branch : 'k8s'
+    git url: 'https://github.com/jfrogtraining/kubernetes_example.git', branch : 'master'
     def rtServer = Artifactory.server SERVER_ID
     def rtDocker = Artifactory.docker server: rtServer
     def tagDockerApp
@@ -11,7 +11,7 @@ node {
     buildInfo.env.capture = true
     //Fetch all depensencies from Artifactory
     stage('Dependencies') {
-        dir('automation/docker-framework') {
+        dir('docker-framework') {
             try {
                 println "Gather Java and Tomcat"
 
@@ -46,7 +46,7 @@ node {
     }
     //Build docker image named "docker-framework" with Java 8 and Tomcat
     stage('Build') {
-        dir ('automation/docker-framework') {
+        dir ('docker-framework') {
                 tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
                 println "Docker Framework Build"
                 docker.build(tagName)
@@ -59,7 +59,7 @@ node {
     }
     //Test docker image
     stage('Test') {
-        dir('automation/docker-framework/framework-test') {
+        dir('docker-framework/framework-test') {
 
             def gradleWarDownload = """{
             "files": [
@@ -107,7 +107,7 @@ node {
 
     //Promote image from local staging repositoy to production repository
     stage ('Promote') {
-        dir ('automation/docker-framework') {
+        dir ('docker-framework') {
             def promotionConfig = [
               'buildName'          : env.JOB_NAME,
               'buildNumber'        : env.BUILD_NUMBER,
