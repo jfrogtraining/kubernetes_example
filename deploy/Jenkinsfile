@@ -20,6 +20,6 @@ node {
 
     stage('Deploy chart pulling from Artifactory') {
         /* Finally, we'll deploy the image to k8s using helm chart. */
-        sh "./helm upgrade my-release --install artifactory/docker-app"
+        sh "./helm upgrade my-release --install artifactory/docker-app-chart"
     }
 }

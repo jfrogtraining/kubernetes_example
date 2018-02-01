@@ -20,6 +20,7 @@ Follow this to setup kubernetes cluster on AKS. [https://docs.microsoft.com/en-u
 
 ## Install Artifactory on kubernetes
 Here is documentation to install JFrog Artifactory on kubernetes [artifactory-docker-examples](https://github.com/JFrogDev/artifactory-docker-examples/tree/master/kubernetes)<br>
+Here is link to official helm chart for Artifactory [https://github.com/kubernetes/charts/tree/master/stable/artifactory](https://github.com/kubernetes/charts/tree/master/stable/artifactory)
 
 <b>Note</b> If you are using [Artifactory SaaS](https://www.jfrog.com/artifactory/free-trial/#Cloud) you can skip this step. 
 
