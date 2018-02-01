@@ -27,7 +27,7 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              path: /swampup/
+              path: /
               port: 8181
               scheme: HTTP
             initialDelaySeconds: 30
