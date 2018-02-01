@@ -4,11 +4,13 @@
 
 1.  On the Jenkins front page, click on Credentials -> System -> Global credentials -> Add Credentials
     Add your Artifactory credentials as the type Username with password, with the ID artifactory-credentials 
-    ![Add_Artifactory_Credentials](images/Add_Credentials.png)
+    ![Add_Artifactory_Credentials](../images/Add_Credentials.png)
     
 2.  Create new Jenkins Pipeline Job.
 
-3.  Add String Parameters:
+3.  Create Helm repositories in Artifactory using [quick setup wizard](https://www.jfrog.com/confluence/display/RTF/Getting+Started#GettingStarted-OnboardingWizard).       
+
+4.  Add String Parameters:
     *   IMAGE_TAG (String Parameter) : Domain of Artifactory docker registry 
 		e.g `IMAGE_TAG : latest`
     *   SERVER_URL (String Parameter) : Artifactory Server URL<Br>
@@ -17,13 +19,12 @@
         e.g. `REPO -> helm`
     *   CREDENTIALS (Credentials Parameter) : Artifactory Credential<Br>
         e.g. `CREDENTIALS -> YES`
-    
     	
-4.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
+5.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
 
-5.  To build it, press Build Now.
+6.  To build it, press Build Now.
 
-6.  Check your newly published build in build browser of Artifactory.
+7.  Check your newly published build in build browser of Artifactory.
 
 ## Commands to deploy `docker-app` chart manually to K8S cluster.
 

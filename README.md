@@ -6,8 +6,7 @@
 - [Setup Kubernetes Cluster on AKS](#setup-kubernetes-cluster-on-aks)
 - [Install Artifactory on kubernetes](#install-artifactory-on-kubernetes)
 - [Install Jenkins on kubernetes](#install-jenkins-on-kubernetes)
-- [Configure Continuous Integration](#configure-continuous-integration-ci)
-- [Configure Continuous Deployment](#configure-continuous-deployment-cd)
+- [Configure Continuous Integration/Continuous Deployment](#5-step-ci/cd)
 
 
 ### Prerequisites
@@ -61,6 +60,8 @@ Cache docker images of jenkins master and agent in Artifactory by changing value
   2. Add `jenkins` user to docker group.
   3. Make sure `jenkins` user can access `/var/run/docker.sock` and  `/usr/bin/docker` in each kubernetes node.
   4. Create `test` job in Jenkins and run `docker version` command from `test` job. 
+
+# 5 Step CI/CD
   
 ## Step 1. Create an application war file
 * Creates a sample application called ‘webservice-1.1.2.war’
@@ -82,9 +83,9 @@ Cache docker images of jenkins master and agent in Artifactory by changing value
 ## Step 4. Create Helm chart of product Docker image
 * Create helm chart of `docker-app`
 * Push helm chart in local helm repository in Artifactory
-[chart](/Chart)
+[chart](/chart)
 
 ## Step 5. Deploy `docker-app` in Kubernetes cluster using helm chart
 * Pull helm chart from Virtual helm repository of Artifactory
 * Deploy `docker-app` in Kubernetes using downloaded helm chart
-[deploy](/Deploy)
+[deploy](/deploy)

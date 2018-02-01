@@ -12,11 +12,18 @@
 
 1.  On the Jenkins front page, click on Credentials -> System -> Global credentials -> Add Credentials
     Add your Artifactory credentials as the type Username with password, with the ID artifactory-credentials 
-    ![Add_Artifactory_Credentials](images/Add_Credentials.png)
+    ![Add_Artifactory_Credentials](../images/Add_Credentials.png)
     
-2.  Create new Jenkins Pipeline Job.
+2.  Create Following Docker repositories in Artifactory.
+    `docker-stage-local` - Local docker repo.
+    `docker-prod-local` - Local docker repo.
+    `docker-remote`     - Remote docker repo pointing to Docker hub `https://registry-1.docker.io/`.
+    `bintray-docker-remote` - Remote docker repo pointing to Bintray: `https://docker.bintray.io`. 
+    `docker` - Virtual docker repo aggregating all above created repo with `docker-stage-local` as default repo for deployment.
 
-3.  Add String Parameters:
+3.  Create new Jenkins Pipeline Job.
+
+4.  Add String Parameters:
     *   ARTDOCKER_REGISTRY (String Parameter) : Domain of Artifactory docker registry 
 		e.g `ARTDOCKER_REGISTRY : docker.artifactory`
     *   REPO (String Parameter) -> Artifactory virtual docker registry<Br>
@@ -34,9 +41,8 @@
     *   CREDENTIALS (Credentials Parameter) : Artifactory Credential<Br>
         e.g. `CREDENTIALS -> YES`
     
-    	
-4.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
+5.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
 
-5.  To build it, press Build Now.
+6.  To build it, press Build Now.
 
-6.  Check your newly published build in build browser of Artifactory.
+7.  Check your newly published build in build browser of Artifactory.

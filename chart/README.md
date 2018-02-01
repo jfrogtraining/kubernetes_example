@@ -4,7 +4,7 @@
 
 1.  On the Jenkins front page, click on Credentials -> System -> Global credentials -> Add Credentials
     Add your Artifactory credentials as the type Username with password, with the ID artifactory-credentials 
-    ![Add_Artifactory_Credentials](images/Add_Credentials.png)
+    ![Add_Artifactory_Credentials](../images/Add_Credentials.png)
     
 2.  Create new Jenkins Pipeline Job.
 

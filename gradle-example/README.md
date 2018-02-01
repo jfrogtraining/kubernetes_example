@@ -13,11 +13,13 @@
 *   [Gradle Plugin](https://wiki.jenkins.io/display/JENKINS/Gradle+Plugin)   
 
 1.  Configure Artifactory server in Jenkins Manage Jenkins -> Configure System -> Artifactory -> Add Artifactory Server.  
-    ![Artifactory UI](images/Add_Artifactory_Server.png)
-    
-2.  Create new Jenkins Pipeline Job.
+    ![Add_Artifactory_Server](../images/Add_Artifactory_Server.png)
 
-3.  Add String Parameters:
+2.  Create Gradle repositories in Artifactory using [quick setup wizard](https://www.jfrog.com/confluence/display/RTF/Getting+Started#GettingStarted-OnboardingWizard).       
+
+3.  Create new Jenkins Pipeline Job.
+
+4.  Add String Parameters:
     *   GRADLE_TOOL (String Parameter) : Provide name of configured Gradle installation 
 		e.g `GRADLE_TOOL : gradle-3.5.1`
     *   DEPLOY_REPO (String Parameter) -> Artifactory Gradle Repository name<Br>
@@ -29,8 +31,8 @@
     *   CLEAN_REPO (Choice Parameter) : Clean gradle cache before building project<Br>
     	e.g. `CLEAN_REPO -> YES`
     	
-4.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
+5.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
 
-5.  To build it, press Build Now.
+6.  To build it, press Build Now.
 
-6.  Check your newly published build in build browser of Artifactory.
+7.  Check your newly published build in build browser of Artifactory.
