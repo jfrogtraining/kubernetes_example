@@ -1,6 +1,6 @@
 FROM docker.artifactory/ubuntu:latest
 
-MAINTAINER Stanley Fong stanleyf@jfrog.com
+MAINTAINER Jainish Shah jainishs@jfrog.com
 
 RUN /bin/bash -c cd ~; cd /home ; mkdir -p exec
 ADD jdk/jdk-8*-x64.tar.gz /home/exec
