@@ -1,0 +1,33 @@
+node {
+
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
+        dir ('docker-app') {
+        git url: 'https://github.com/jainishshah17/docker-app.git'
+        }
+    }
+
+    stage('Install helm & JFrog CLI') {
+        /* This installs helm client */
+        sh "curl -u admin:password -O ${SERVER_URL}/generic-local/helm"
+        sh "chmod 777 ./helm"
+        sh "wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.13.1/jfrog-cli-linux-amd64/jfrog"
+        sh "chmod 777 ./jfrog"
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        sh "./jfrog rt config --url ${SERVER_URL} --user ${env.USERNAME} --password ${env.PASSWORD}"
+        }
+    }
+
+    stage('Build Chart & push it to Artifactory repo') {
+        /* Configure helm client to point to k8s cluster */
+         sh "./helm init"
+         sh "sed -i 's/latest/${IMAGE_TAG}/g' ./docker-app/values.yaml"
+         sh "./helm package ./docker-app/"
+         sh "./jfrog rt u '*.tgz' helm --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER}"
+         sh "./jfrog rt bce ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+         sh "./jfrog rt dl docker-prod-local/docker-app/${IMAGE_TAG}/manifest.json --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER} "
+         echo "test"
+         sh "./jfrog rt bp ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+    }
+
+}
