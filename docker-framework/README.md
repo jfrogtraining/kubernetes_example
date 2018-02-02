@@ -21,9 +21,11 @@
     `bintray-docker-remote` - Remote docker repo pointing to Bintray: `https://docker.bintray.io`. 
     `docker` - Virtual docker repo aggregating all above created repo with `docker-stage-local` as default repo for deployment.
 
-3.  Create new Jenkins Pipeline Job.
+3.  Create Generic local repository with name `tomcat-local` and deploy [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Tomcat](https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.tar.gz) binaries in it. 
 
-4.  Add String Parameters:
+4.  Create new Jenkins Pipeline Job.
+
+5.  Add String Parameters:
     *   ARTDOCKER_REGISTRY (String Parameter) : Domain of Artifactory docker registry 
 		e.g `ARTDOCKER_REGISTRY : docker.artifactory`
     *   REPO (String Parameter) -> Artifactory virtual docker registry<Br>
@@ -41,8 +43,8 @@
     *   CREDENTIALS (Credentials Parameter) : Artifactory Credential<Br>
         e.g. `CREDENTIALS -> YES`
     
-5.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
+6.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
 
-6.  To build it, press Build Now.
+7.  To build it, press Build Now.
 
-7.  Check your newly published build in build browser of Artifactory.
+8.  Check your newly published build in build browser of Artifactory.
