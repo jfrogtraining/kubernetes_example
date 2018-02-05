@@ -6,13 +6,13 @@ node {
     }
 
     stage('Install helm & JFrog CLI') {
-        /* This installs helm client */
-        sh "curl -u admin:password -O ${SERVER_URL}/generic-local/helm"
-        sh "chmod 777 ./helm"
+        /* This installs helm client and JFrog Cli */
         sh "wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.13.1/jfrog-cli-linux-amd64/jfrog"
         sh "chmod 777 ./jfrog"
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         sh "./jfrog rt config --url ${SERVER_URL} --user ${env.USERNAME} --password ${env.PASSWORD}"
+        sh "curl -u ${env.USERNAME}:${env.PASSWORD} -O ${SERVER_URL}/generic-local/helm"
+        sh "chmod 777 ./helm"
         }
     }
 
@@ -26,5 +26,4 @@ node {
          sh "./jfrog rt dl docker-prod-local/docker-app/${IMAGE_TAG}/manifest.json --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER} "
          sh "./jfrog rt bp ${env.JOB_NAME} ${env.BUILD_NUMBER}"
     }
-
 }
