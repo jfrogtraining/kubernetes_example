@@ -43,5 +43,5 @@ helm repo update
 
 * Install `docker-app` in k8s
 ```
-helm install my-release artifactory/docker-app-chart
+helm install my-docker-app artifactory/docker-app-chart
 ```
