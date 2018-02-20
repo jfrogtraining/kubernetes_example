@@ -41,7 +41,7 @@
     *   SERVER_URL (String Parameter) : Artifactory Server URL<Br>
         e.g. `SERVER_URL -> http://35.225.27.231/artifactory`
     *   CREDENTIALS (Credentials Parameter) : Artifactory Credential<Br>
-        e.g. `CREDENTIALS -> YES`
+        e.g. `CREDENTIALS -> artifactory-credentials`
     
 6.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
 
