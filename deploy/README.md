@@ -18,7 +18,7 @@
     *   REPO (String Parameter) : Artifactory Helm repo<Br>
         e.g. `REPO -> helm`
     *   CREDENTIALS (Credentials Parameter) : Artifactory Credential<Br>
-        e.g. `CREDENTIALS -> YES`
+        e.g. `CREDENTIALS -> artifactory-credentials`
     	
 5.  Copy [Jenkinsfile](Jenkinsfile) to Pipeline Script.
 
