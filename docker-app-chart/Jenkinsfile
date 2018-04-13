@@ -18,6 +18,7 @@ node {
     stage('Build Chart & push it to Artifactory repo') {
         /* Configure helm client to point to k8s cluster */
          sh "./helm init"
+         sh "sed -i 's/0.1.1/0.1.${env.BUILD_NUMBER}/' docker-app-chart/Chart.yaml"
          sh "sed -i 's/latest/${IMAGE_TAG}/g' docker-app-chart/values.yaml"
          sh "./helm package ./docker-app-chart/"
          sh "./jfrog rt u '*.tgz' ${REPO} --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER}"
