@@ -11,9 +11,10 @@ node {
 
     stage('Configure helm & add Artifactory repo') {
         /* Configure helm client to point to k8s cluster */
-         sh './helm init'
+         sh './helm init --upgrade'
          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-           sh "./helm repo add artifactory ${SERVER_URL}/helm ${env.USERNAME} ${env.PASSWORD}"
+           sh "./helm version"
+           sh "./helm repo add artifactory ${SERVER_URL}/helm --username ${env.USERNAME} --password ${env.PASSWORD}"
            sh "./helm repo update"
          }
     }
