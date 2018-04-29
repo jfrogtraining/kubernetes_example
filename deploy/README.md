@@ -33,8 +33,9 @@ Here is link to [PR](https://github.com/kubernetes/helm/pull/3206)
 
 * Add Artifactory Helm repo with helm client
 ```
-helm repo add artifactory $ART_URL/$HELM_REPO $ART_USERNAME $ART_PASSWORD
+helm repo add artifactory $ART_URL/$HELM_REPO --username $ART_USERNAME --password $ART_PASSWORD
 ```
+**Note**: `--username` and `--pasword` flag is only supported in helm version 2.9.0 and higher.
 
 * Update local helm repo index
 ```
