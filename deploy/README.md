@@ -28,9 +28,6 @@
 
 ## Commands to deploy `docker-app` chart manually to K8S cluster.
 
-For this example I am using custom helm client with Authentication support for remote charts repositories
-Here is link to [PR](https://github.com/kubernetes/helm/pull/3206)
-
 * Add Artifactory Helm repo with helm client
 ```
 helm repo add artifactory $ART_URL/$HELM_REPO --username $ART_USERNAME --password $ART_PASSWORD
