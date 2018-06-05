@@ -2,6 +2,7 @@
 
 # Contents
 
+- [Setup Kubernetes Cluster on EKS](#setup-kubernetes-cluster-on-eks)
 - [Setup Kubernetes Cluster on GKE](#setup-kubernetes-cluster-on-gke)
 - [Setup Kubernetes Cluster on AKS](#setup-kubernetes-cluster-on-aks)
 - [Install Artifactory on kubernetes](#install-artifactory-on-kubernetes)
@@ -11,6 +12,9 @@
 
 ### Prerequisites
 * Basic knowledge of [Docker](https://www.docker.com/), [Jenkins](https://jenkins.io/), [Kubernetes](https://kubernetes.io/) and [Artifactory](https://www.jfrog.com/artifactory/)
+
+## Setup Kubernetes Cluster on EKS
+Follow this to setup kubernetes cluster on EKS. [https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html)
 
 ## Setup Kubernetes Cluster on GKE
 Follow this to setup kubernetes cluster on GKE. [https://cloud.google.com/container-engine/docs/quickstart](https://cloud.google.com/container-engine/docs/quickstart)
