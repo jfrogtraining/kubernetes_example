@@ -1,4 +1,4 @@
-FROM docker.artifactory/ubuntu:latest
+FROM docker.artifactory/ubuntu:14.04
 
 MAINTAINER Jainish Shah jainishs@jfrog.com
 
