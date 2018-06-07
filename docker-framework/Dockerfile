@@ -11,7 +11,7 @@ ENV JAVA_HOME=/home/exec/jdk1.8.0_91
 
 COPY tomcat/apache-tomcat-8.tar.gz /home/exec/tomcat
 RUN cd /home/exec/ && tar -xvf /home/exec/tomcat/apache-tomcat-8.tar.gz
-COPY tomcat/server.xml /home/exec/apache-tomcat-8.0.32/conf/server.xml
+ADD tomcat/server.xml /home/exec/apache-tomcat-8.0.32/conf/server.xml
 ENV CATALINA_HOME=/home/exec/apache-tomcat-8.0.32
 ENV TEST_ENV=2
 
