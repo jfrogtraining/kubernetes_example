@@ -20,6 +20,6 @@ node {
 
     stage('Deploy chart pulling from Artifactory') {
         /* Finally, we'll deploy the image to k8s using helm chart. */
-        sh "./linux-amd64/helm upgrade my-docker-app --install artifactory/docker-app-chart"
+        sh "./linux-amd64/helm upgrade my-docker-app --install --recreate-pods artifactory/docker-app-chart"
     }
 }
