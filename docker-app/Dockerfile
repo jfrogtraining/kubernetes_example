@@ -2,8 +2,8 @@ FROM docker.artifactory/docker-framework:latest
 
 MAINTAINER Jainish Shah jainishs@jfrog.com
 
-RUN rm -rf /home/exec/tomcat/webapps/*
+RUN rm -rf /home/exec/apache-tomcat-8.0.32/webapps/*
 
-ADD war/*.war /home/exec/tomcat/webapps/ROOT.war
+ADD war/*.war /home/exec/apache-tomcat-8.0.32/webapps/ROOT.war
 
-CMD /bin/bash -c cd /home/exec; /home/exec/tomcat/bin/catalina.sh run
+CMD /bin/bash -c cd /home/exec; /home/exec/apache-tomcat-8.0.32/bin/catalina.sh run
