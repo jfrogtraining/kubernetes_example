@@ -2,25 +2,24 @@ node {
 
     stage('Install helm') {
         /* This installs helm client */
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          sh "curl -u ${env.USERNAME}:${env.PASSWORD} -O ${SERVER_URL}/generic-local/helm"
-          sh "chmod 777 ./helm"
-        }
-
+          sh "curl -O https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz"
+          sh "tar -xvf helm-v2.9.1-linux-amd64.tar.gz"
+          sh "chmod 777 ./linux-amd64/helm"
+          sh "./linux-amd64/helm version"
     }
 
     stage('Configure helm & add Artifactory repo') {
         /* Configure helm client to point to k8s cluster */
-         sh './helm init --upgrade'
+         sh './linux-amd64/helm init --upgrade'
          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-           sh "./helm version"
-           sh "./helm repo add artifactory ${SERVER_URL}/helm --username ${env.USERNAME} --password ${env.PASSWORD}"
-           sh "./helm repo update"
+           sh "./linux-amd64/helm version"
+           sh "./linux-amd64/helm repo add artifactory ${SERVER_URL}/helm --username ${env.USERNAME} --password ${env.PASSWORD}"
+           sh "./linux-amd64/helm repo update"
          }
     }
 
     stage('Deploy chart pulling from Artifactory') {
         /* Finally, we'll deploy the image to k8s using helm chart. */
-        sh "./helm upgrade my-docker-app --install artifactory/docker-app-chart"
+        sh "./linux-amd64/helm upgrade my-docker-app --install artifactory/docker-app-chart"
     }
 }
