@@ -6,21 +6,24 @@ node {
     }
 
     stage('Install helm & JFrog CLI') {
-        /* This installs helm client and JFrog Cli */
+         /* This installs helm client */
+        sh "curl -O https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz"
+        sh "tar -xvf helm-v2.9.1-linux-amd64.tar.gz"
+        sh "chmod 777 ./linux-amd64/helm"
+        sh "./linux-amd64/helm version -c"
+        /* This installs and configure JFrog Cli */
         sh "curl -fL https://getcli.jfrog.io | sh"
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         sh "./jfrog rt config --url ${SERVER_URL} --user ${env.USERNAME} --password ${env.PASSWORD}"
-        sh "curl -u ${env.USERNAME}:${env.PASSWORD} -O ${SERVER_URL}/generic-local/helm"
-        sh "chmod 777 ./helm"
         }
     }
 
     stage('Build Chart & push it to Artifactory repo') {
         /* Configure helm client to point to k8s cluster */
-         sh "./helm init"
+         sh "./linux-amd64/helm init"
          sh "sed -i 's/0.1.1/0.1.${env.BUILD_NUMBER}/' docker-app-chart/Chart.yaml"
          sh "sed -i 's/latest/${IMAGE_TAG}/g' docker-app-chart/values.yaml"
-         sh "./helm package ./docker-app-chart/"
+         sh "./linux-amd64/helm package ./docker-app-chart/"
          sh "./jfrog rt u '*.tgz' ${REPO} --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER}"
          sh "./jfrog rt bce ${env.JOB_NAME} ${env.BUILD_NUMBER}"
          sh "./jfrog rt dl docker-prod-local/docker-app/${IMAGE_TAG}/manifest.json --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER} "
