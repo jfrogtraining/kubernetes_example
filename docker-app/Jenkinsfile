@@ -1,6 +1,10 @@
 #!/usr/bin/env groovy
 
 node {
+    
+    // Cleanup workspace
+    deleteDir()
+    
     //Clone example project from GitHub repository
     git url: 'https://github.com/jfrogtraining/kubernetes_example.git', branch: 'master'
     def rtServer = Artifactory.server SERVER_ID
