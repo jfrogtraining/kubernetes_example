@@ -35,4 +35,4 @@
 
 6.  To build it, press Build Now.
 
-7.  Check your newly published build in build browser of Artifactory.
+7.  Check your newly published build in build browser of Artifactory. 
