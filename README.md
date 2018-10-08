@@ -94,4 +94,3 @@ Cache docker images of jenkins master and agent in Artifactory by changing value
 * Pull helm chart from Virtual helm repository of Artifactory
 * Deploy `docker-app` in Kubernetes using downloaded helm chart
 * [deploy](/deploy)
-
