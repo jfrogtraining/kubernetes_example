@@ -96,6 +96,11 @@ node {
         // promote war file from gradle-dev-local to gradle-release-local
 
      }*/
+    
+    stage ("Retag latest image") {
+        reTagLatest (SOURCE_REPO)   
+    }
+        
 }
 
 def testApp (tag) {
