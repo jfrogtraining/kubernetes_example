@@ -51,7 +51,7 @@ node {
      }
     
     stage ("Retag latest image") {
-        dir('docker-app/app-test') {
+        dir('docker-app') {
             reTagLatest (SOURCE_REPO)   
         }
     }
@@ -131,16 +131,14 @@ def testApp (tag) {
 def reTagLatest (targetRepo) {
     def BUILD_NUMBER = env.BUILD_NUMBER
     sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
-    sh 'cat retag_out.json'
-    //switch (targetRepo) {
-    //      case PROMOTE_REPO :
-    //          sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
-    //          break
-    //      case SOURCE_REPO :
-    //           sh 'sed -E "s/TARGETREPO/${SOURCE_REPO}/" retag_out.json > retaga_out.json'
-    //           break
-    //  }
-    sh "sed -E \"s/TARGETREPO/${targetRepo}/\" retag_out.json > retaga_out.json"
+    switch (targetRepo) {
+          case PROMOTE_REPO :
+              sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
+              break
+          case SOURCE_REPO :
+              sh 'sed -E "s/TARGETREPO/${SOURCE_REPO}/" retag_out.json > retaga_out.json'
+              break
+    }
     sh 'cat retaga_out.json'
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
