@@ -98,7 +98,9 @@ node {
      }*/
     
     stage ("Retag latest image") {
-        reTagLatest (SOURCE_REPO)   
+        dir('docker-app/app-test') {
+            reTagLatest (SOURCE_REPO)   
+        }
     }
         
 }
