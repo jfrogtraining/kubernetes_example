@@ -45,6 +45,13 @@ node {
             rtServer.publishBuildInfo buildInfo
         }
      }
+    
+    stage ("Retag latest image") {
+        dir('docker-app/app-test') {
+            reTagLatest (SOURCE_REPO)   
+        }
+    }
+    
     //Test docker image
      stage ('Test') {
         dir('docker-app/app-test') {
@@ -97,11 +104,7 @@ node {
 
      }*/
     
-    stage ("Retag latest image") {
-        dir('docker-app/app-test') {
-            reTagLatest (SOURCE_REPO)   
-        }
-    }
+    
         
 }
 
