@@ -76,7 +76,7 @@ node {
      }
 
     //Promote docker image from staging local repo to production repo in Artifactory
-     stage ('Promote') {
+    /* stage ('Promote') {
         dir('docker-app/app-test') {
             def promotionConfig = [
               'buildName'          : env.JOB_NAME,
@@ -95,7 +95,7 @@ node {
 
         // promote war file from gradle-dev-local to gradle-release-local
 
-     }
+     }*/
 }
 
 def testApp (tag) {
